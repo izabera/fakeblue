@@ -38,6 +38,7 @@ struct blue {
         u32 side = 1 << depth;
         u32 npoints = 1 << density;
         field.resize(side / 8 * side);
+        auto data = field.data();
 
         std::cerr << "size: " << side << 'x' << side << '\n';
         std::cerr << "noise: " << npoints << " points\n";
@@ -67,7 +68,7 @@ struct blue {
             // interpret it as a point on a morton curve
             auto [x, y] = demorton(point);
             auto idx = x * side + y;
-            field[idx / 8] |= 1 << (idx % 8);
+            data[idx / 8] |= 1 << (idx % 8);
         }
         std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
 
